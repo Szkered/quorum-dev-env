@@ -12,9 +12,9 @@ wget -q https://dl.google.com/go/$GOREL
 tar xfz $GOREL
 mv go /usr/local/go
 rm -f $GOREL
-PATH=$PATH:/usr/local/go/bin
-GOPATH=/home/vagrant/go
-PATH=$PATH:$GOPATH/bin
+export PATH=$PATH:/usr/local/go/bin
+export GOPATH=/home/vagrant/go
+export PATH=$PATH:$GOPATH/bin
 
 # (optional) install zsh
 chsh -s $(which zsh)
@@ -23,7 +23,7 @@ echo 'exec /bin/zsh -l' >> .bash_profile
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 curl -L git.io/antigen > antigen.zsh # install antigen
 cp /vagrant/.zshrc /home/vagrant/.zshrc
-git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions # plugin
+git clone https://github.com/zsh-users/zsh-autosuggestions /home/vagrant/.zsh/zsh-autosuggestions # plugin
 
 # setting env var in zsh
 echo 'export PATH=$PATH:/usr/local/go/bin' >> /home/vagrant/.zshrc
@@ -34,11 +34,12 @@ echo 'export PATH=$PATH:$GOPATH/bin' >> /home/vagrant/.zshrc
 git clone https://github.com/Szkered/quorum.git $GOPATH/src/github.com/ethereum/go-ethereum
 git clone https://github.com/Szkered/constellation.git
 git clone https://github.com/Szkered/quorum-tools.git
-chown -R vagrant:vagrant /home/vagrant/quorum-tools /home/vagrant/constellation
 
 # install geth dependencies
 cd $GOPATH/src/github.com/ethereum/go-ethereum
 go install -v ./...
+
+chown -R vagrant:vagrant /home/vagrant/quorum-tools /home/vagrant/constellation $GOPATH
 
 # install haskell tools
 curl -sSL https://get.haskellstack.org/ | sh  # stack
