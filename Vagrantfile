@@ -1,4 +1,5 @@
 Vagrant.configure(2) do |config|
+  config.vm.define "quorum-dev"
   config.vm.box = "ubuntu/xenial64"
   config.vm.provision :shell, path: "vagrant/bootstrap.sh"
   config.vm.network "forwarded_port", guest: 22000, host: 22000
@@ -9,6 +10,6 @@ Vagrant.configure(2) do |config|
   config.vm.network "forwarded_port", guest: 22005, host: 22005
   config.vm.network "forwarded_port", guest: 22006, host: 22006
   config.vm.provider "virtualbox" do |v|
-    v.memory = 2048
+    v.memory = 8192
   end
 end
